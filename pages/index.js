@@ -1,8 +1,21 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
+import { useEffect, useState } from "react";
 
-export default function Home() {
+export default function Home(props) {
+  console.log(props)
+  /*const myFunction = async () => {
+    let data = await fetch('https://api.bluelytics.com.ar/v2/latest')
+    let res = await data.json()
+    console.log(res)
+    setDolarBluePrice(res.blue.value_buy)
+  }; */
+
+  /*useEffect( () => {
+    myFunction()
+  }, []) */
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,58 +25,30 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        <h2>Dolar Blue ${props.resDolarPrice.blue.value_avg}</h2>
+        <h2>Euro Blue ${props.resDolarPrice.blue_euro.value_avg}</h2>
+        <h2>Bitcoin ${props.dataBitcoinPrice.data[0].quote.USD.price.toFixed()}</h2>
+        <h2>Ethereum ${props.dataBitcoinPrice.data[1].quote.USD.price.toFixed()}</h2>
+        <h2>BNB ${props.dataBitcoinPrice.data[4].quote.USD.price.toFixed()}</h2>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+      <footer className={styles.footer}></footer>
     </div>
-  )
+  );
+}
+
+export async function getServerSideProps(context) {
+  let dataDolarPrice = await fetch("https://api.bluelytics.com.ar/v2/latest");
+  let resDolarPrice = await dataDolarPrice.json();
+
+  let url =
+      "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest",
+    qString ="?CMC_PRO_API_KEY=" +
+      process.env.CMC_PRO_API_KEY +
+      "&start=1&limit=5&convert=USD";
+
+  const BitcoinPriceRes = await fetch(url + qString);
+  const dataBitcoinPrice = await BitcoinPriceRes.json();
+  return {
+    props: { resDolarPrice, dataBitcoinPrice }, // will be passed to the page component as props
+  };
 }
