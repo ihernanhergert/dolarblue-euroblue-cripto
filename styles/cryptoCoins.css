@@ -1,0 +1,22 @@
+.heading {
+    display: flex;
+}
+
+.heading p {
+    font-size: 2rem;
+    margin: 0 1rem;
+    font-weight: bold;
+}
+
+.containerCryptoCoins{
+    background-color: aqua;
+    outline: 4px solid black;
+}
+
+thead {
+    text-align: center;
+}
+
+tbody {
+    text-align: center;
+}

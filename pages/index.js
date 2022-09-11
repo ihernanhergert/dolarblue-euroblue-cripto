@@ -1,20 +1,8 @@
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { useEffect, useState } from "react";
+import Home from "../components/Home";
 
-export default function Home(props) {
-  console.log(props)
-  /*const myFunction = async () => {
-    let data = await fetch('https://api.bluelytics.com.ar/v2/latest')
-    let res = await data.json()
-    console.log(res)
-    setDolarBluePrice(res.blue.value_buy)
-  }; */
-
-  /*useEffect( () => {
-    myFunction()
-  }, []) */
+export default function Index(props) {
 
   return (
     <div className={styles.container}>
@@ -24,31 +12,23 @@ export default function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h2>Dolar Blue ${props.resDolarPrice.blue.value_avg}</h2>
-        <h2>Euro Blue ${props.resDolarPrice.blue_euro.value_avg}</h2>
-        <h2>Bitcoin ${props.dataBitcoinPrice.data[0].quote.USD.price.toFixed()}</h2>
-        <h2>Ethereum ${props.dataBitcoinPrice.data[1].quote.USD.price.toFixed()}</h2>
-        <h2>BNB ${props.dataBitcoinPrice.data[4].quote.USD.price.toFixed()}</h2>
-      </main>
-      <footer className={styles.footer}></footer>
+      <Home props={props}/>
+
+      <footer className={styles.footer}>
+        <h6>Data provided by CoinGecko</h6>
+      </footer>
     </div>
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   let dataDolarPrice = await fetch("https://api.bluelytics.com.ar/v2/latest");
   let resDolarPrice = await dataDolarPrice.json();
 
-  let url =
-      "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest",
-    qString ="?CMC_PRO_API_KEY=" +
-      process.env.CMC_PRO_API_KEY +
-      "&start=1&limit=5&convert=USD";
+  const resCoingecko = await fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false");
+  const dataCoingecko = await resCoingecko.json()
 
-  const BitcoinPriceRes = await fetch(url + qString);
-  const dataBitcoinPrice = await BitcoinPriceRes.json();
   return {
-    props: { resDolarPrice, dataBitcoinPrice }, // will be passed to the page component as props
+    props: { resDolarPrice, dataCoingecko }, // will be passed to the page component as props
   };
 }
