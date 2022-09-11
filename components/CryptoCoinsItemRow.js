@@ -3,7 +3,7 @@ import React from 'react'
 
 const CryptoCoinsItemRow = ({coins, index}) => {
   return (
-    <tr key={index}>
+    <tr key={index} style={{width: '100%'}}>
         <td>{index}</td>
         <td><Image width='30px' height='30px' src={coins.image} alt={coins.name}/></td>
         <td style={{display:'flex' }}>

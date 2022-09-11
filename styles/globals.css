@@ -40,13 +40,13 @@ thead {
 
 table {
   display: block;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 tbody {
   display: block;
   max-height: 70vh;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 thead, tbody tr {

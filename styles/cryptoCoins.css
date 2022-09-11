@@ -13,6 +13,15 @@
     outline: 4px solid black;
 }
 
+.containerFiat{
+    display: flex;
+    color: wheat;
+    justify-content: center;
+    padding: 2px;
+    height: 3rem;
+    font-size: 2rem;
+}
+
 thead {
     text-align: center;
 }
