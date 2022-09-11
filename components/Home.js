@@ -9,7 +9,7 @@ const Home = (props) => {
     <main className={styles.main}>
         {console.log(props.props.resDolarPrice)}
         <div className='containerFiat'>
-          <span style={{marginRight: '2rem'}}>Dolar ${props.props.resDolarPrice.blue.value_avg}</span>
+          <span style={{marginRight: '2rem'}}>USD ${props.props.resDolarPrice.blue.value_avg}</span>
           <span style={{marginLeft: '2rem'}}>EUR ${props.props.resDolarPrice.blue_euro.value_avg}</span>
         </div>
         
