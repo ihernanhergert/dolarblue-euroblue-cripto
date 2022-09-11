@@ -14,7 +14,7 @@ const CryptoCoinsItemRow = ({coins, index}) => {
                 {coins.symbol.toUpperCase()}
             </span>
         </td>
-        <td>{coins.current_price}</td>
+        <td>U$D {coins.current_price}</td>
         <td style={coins.price_change_percentage_24h > 0 ? {color: 'green'} : { color: 'red'}}>
             {coins.price_change_percentage_24h}
         </td>

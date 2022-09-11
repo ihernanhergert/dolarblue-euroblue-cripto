@@ -9,6 +9,7 @@ const CryptoCoins = ({props, search}) => {
 
   const titles = ['#', '', 'Coin', 'Price', 'Price Change', '24h Volume']
 
+  if (!filteredCoins) return <div>no coins</div>
   return (
     <div className='containerCryptoCoins'>
       <table>
@@ -21,8 +22,8 @@ const CryptoCoins = ({props, search}) => {
           }
         </tr>
       </thead>
-        {<tbody>
-          {props.props.dataCoingecko.map((coin,index) => {
+        {<tbody >
+          {filteredCoins.map((coin,index) => {
             return <CryptoCoinsItemRow coins={coin} key={index} index={index} />
           })}
         </tbody>}

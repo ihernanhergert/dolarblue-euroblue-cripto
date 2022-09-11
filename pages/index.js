@@ -25,7 +25,7 @@ export async function getServerSideProps() {
   let dataDolarPrice = await fetch("https://api.bluelytics.com.ar/v2/latest");
   let resDolarPrice = await dataDolarPrice.json();
 
-  const resCoingecko = await fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false");
+  const resCoingecko = await fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=1000&page=1&sparkline=false");
   const dataCoingecko = await resCoingecko.json()
 
   return {
